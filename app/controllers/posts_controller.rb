@@ -4,11 +4,25 @@ class PostsController < ApplicationController
     @post = Post.new(post_params)
 
     if @post.save
-      render json: {'body' => 'overwrite'}
+      render json: @post
     else
       raise Exception.new "Something went horribly wrong"
     end
+  end
 
+  def index
+    @posts = Post.all
+
+    render json: @posts
+  end
+
+  def destroy
+    @post = Post.find(params[:id])
+    if @post.destroy
+      render json: @post
+    else
+      raise Exception.new "To destroy is not in my programming"
+    end
   end
 
   private
